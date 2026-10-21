@@ -76,3 +76,13 @@ Truy van LogQL mau:
     {service="app"} | json | status >= 400
     {service="nginx"} |= "404"
     sum by (service) (count_over_time({service=~".+"}[5m]))
+
+## Hardening
+
+- Container non-root: app (uid node), nginx-unprivileged (uid 101), grafana/prometheus/loki chay user thuong
+- Network isolation: mang backend internal, mang monitoring rieng, DB khong publish cong
+- Mat khau manh trong .env (khong commit), .env.example la file mau
+- Security headers Nginx: HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy; an X-Powered-By va /metrics
+- Phan quyen DB: hrm_app chi SELECT/INSERT/UPDATE/DELETE, exporter chi pg_monitor
+- app va nginx: no-new-privileges, cap_drop ALL; app chay read_only filesystem
+- Admin tool (pgAdmin, Grafana, Prometheus) chi bind 127.0.0.1
