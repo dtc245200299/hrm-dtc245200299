@@ -45,3 +45,23 @@ Ket noi pgAdmin toi DB: host `db`, port `5432`, database `hrm`, user `hrm_admin`
 
 Container app va nginx chay non-root, mang backend internal, DB khong publish cong,
 user DB rieng quyen toi thieu (hrm_app), security headers tren Nginx, an /metrics, mat khau nam trong .env (khong commit).
+
+## Giam sat (Prometheus + Grafana)
+
+Dich vu: prometheus, grafana, cadvisor (container), nginx-exporter (web), postgres-exporter (DB).
+
+| Dich vu | URL |
+|---|---|
+| Grafana | http://localhost:3001 (user admin, mat khau GRAFANA_PASSWORD) |
+| Prometheus | http://localhost:9090 |
+
+Dashboard Grafana import theo ID: 14282 (container), 12708 (Nginx), 9628 (PostgreSQL).
+
+### Luu y ve Docker (Docker 29 tren Ubuntu 26.04)
+
+cAdvisor khong nhan ten container khi Docker dung containerd image store. Can tat tinh nang nay:
+
+    echo '{"features":{"containerd-snapshotter":false}}' | sudo tee /etc/docker/daemon.json
+    sudo systemctl restart docker
+
+Kiem tra: `docker info -f '{{.DriverStatus}}'` phai co `Backing Filesystem` (overlay2), khong con `io.containerd.snapshotter.v1`.
