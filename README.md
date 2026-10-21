@@ -65,3 +65,14 @@ cAdvisor khong nhan ten container khi Docker dung containerd image store. Can ta
     sudo systemctl restart docker
 
 Kiem tra: `docker info -f '{{.DriverStatus}}'` phai co `Backing Filesystem` (overlay2), khong con `io.containerd.snapshotter.v1`.
+
+## Log tap trung (Loki + Promtail)
+
+Promtail doc log cac container qua Docker socket va day vao Loki. Xem log tren Grafana (Explore, datasource Loki).
+
+Truy van LogQL mau:
+
+    {service="app"}
+    {service="app"} | json | status >= 400
+    {service="nginx"} |= "404"
+    sum by (service) (count_over_time({service=~".+"}[5m]))
