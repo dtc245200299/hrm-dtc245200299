@@ -30,6 +30,8 @@ services:
       DB_NAME: ${POSTGRES_DB}
       DB_USER: hrm_app
       DB_PASSWORD: ${APP_DB_PASSWORD}
+      SESSION_SECRET: ${SESSION_SECRET}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
       db:
         condition: service_healthy

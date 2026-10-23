@@ -86,3 +86,15 @@ Truy van LogQL mau:
 - Phan quyen DB: hrm_app chi SELECT/INSERT/UPDATE/DELETE, exporter chi pg_monitor
 - app va nginx: no-new-privileges, cap_drop ALL; app chay read_only filesystem
 - Admin tool (pgAdmin, Grafana, Prometheus) chi bind 127.0.0.1
+
+## HRM v2 - Hai tac nhan
+
+He thong co hai vai tro dang nhap:
+
+| Tac nhan | Tai khoan | Chuc nang |
+|---|---|---|
+| Quan tri vien | `admin` (mat khau: bien ADMIN_PASSWORD trong .env) | Tong quan, quan ly nhan vien, phong ban, cham cong, duyet nghi phep, cap tai khoan |
+| Nhan vien | ma nhan vien viet thuong (vd `nv0104`), do quan tri vien cap | Tong quan ca nhan, vao/ra ca, xem lich su cham cong, gui/huy don nghi phep |
+
+Bao mat bo sung: mat khau bam scrypt, cookie phien HttpOnly + Secure + SameSite=Strict, phan quyen theo vai tro o phia may chu,
+gioi han dang nhap sai 5 lan/5 phut, nhat ky su kien (login_failed, employee_created...) dang JSON de truy van bang LogQL.
